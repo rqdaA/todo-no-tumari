@@ -1,6 +1,10 @@
 version: "3"
 services:
-  todonoko-front:
-    build: todonoko_front/
+  frontend:
+    build: frontend/
     ports:
       - 8000:80
+  backend:
+    build: backend/
+    ports:
+      - 8080:80
