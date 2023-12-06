@@ -1,12 +1,12 @@
-interface User {
-  name: string;
-  discord_id: number | undefined;
-  created_at: number; // TODO: change to Date
-  todoList: TodoItem[]; // TODO: rename snake_case
+export interface User {
+    name: string;
+    discord_id: number | undefined;
+    created_at: Date; // TODO: change to Date
+    todo_list: TodoItem[];
 }
 
-interface TodoItem {
-  id: number;
-  name: string;
-  done: boolean;
+export interface TodoItem {
+    id: number;
+    name: string;
+    done: boolean;
 }

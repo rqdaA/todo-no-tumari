@@ -1,8 +1,6 @@
-version: '3'
+version: "3"
 services:
-  todonoko:
-    build: .
-    volumes:
-      - .:/app
+  todonoko-front:
+    build: todonoko_front/
     ports:
-      - 13000:3000
+      - 8000:80

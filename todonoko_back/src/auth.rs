@@ -1,22 +1,20 @@
-use actix_identity::Identity;
-use actix_web::{http::header, post, web, HttpMessage, HttpRequest, HttpResponse, Responder};
-use serde::{Deserialize, Serialize};
+use crate::interface::User;
+use crate::SESSION_COOKIE_NAME;
 
-#[derive(Serialize, Deserialize)]
-pub struct LoginParams {
-    username: String,
-    pwd: String,
-}
-#[post("/login")]
-pub async fn login(req: HttpRequest, params: web::Form<LoginParams>) -> impl Responder {
-    let user_name = &params.username;
-    let pwd = &params.pwd;
-    if pwd != "whoami" {
-        return HttpResponse::Unauthorized().finish();
+fn session_user(session_cookie: &String) -> User {
+    User {
+        name: "".to_string(),
+        discord_id: None,
+        todo_list: vec![],
     }
+}
 
-    Identity::login(&req.extensions(), user_name.into()).unwrap();
-    HttpResponse::SeeOther()
-        .append_header((header::LOCATION, "/"))
-        .finish()
+pub fn has_login(session: &actix_session::Session) -> Result<User, String> {
+    match session.get::<String>(SESSION_COOKIE_NAME) {
+        Ok(session_cookie) => match session_cookie {
+            Some(session_cookie) => Ok(session_user(&session_cookie)),
+            None => Err(String::from("Not valid session cookie"))
+        },
+        Err(_) => Err(String::from("Error while reading cookie"))
+    }
 }

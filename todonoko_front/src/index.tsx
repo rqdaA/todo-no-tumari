@@ -1,11 +1,7 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import App from './App';
 import {createRoot} from "react-dom/client";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import LoginForm from "./LoginForm";
-import Header from "./Header";
-import {LoginUserProvider} from "./LoginUserProvider";
-import SignupForm from "./SignupForm";
+import {BrowserRouter} from "react-router-dom";
 
 const root_dom = document.getElementById('root')
 if (root_dom != null) {
@@ -13,15 +9,7 @@ if (root_dom != null) {
     root.render(
         <React.StrictMode>
             <BrowserRouter>
-                <LoginUserProvider>
-                    <Header/>
-                    <Routes>
-                        <Route path="/login" element={<LoginForm/>}/>
-                        <Route path="/signup" element={<SignupForm/>}/>
-                        <Route path="/" element={<App/>}/>
-                        <Route path="*" element={<p>get out!</p>}/>
-                    </Routes>
-                </LoginUserProvider>
+                <App/>
             </BrowserRouter>
         </React.StrictMode>,
     );
